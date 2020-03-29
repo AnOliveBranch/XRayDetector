@@ -1,0 +1,16 @@
+name: XRayDetector
+author: RoboticPlayer
+version: 1.0
+main: me.roboticplayer.xraydetector.XRayDetector
+api-version: 1.13
+
+permissions:
+  xraydetector.*:
+    description: All xraydetector permissions
+    children:
+      xraydetector.bypass: true
+      xraydetector.notify: true
+  xraydetector.bypass:
+    description: Bypass xraydetector checks
+  xraydetector.notify:
+    description: Be notified of potential cheaters
