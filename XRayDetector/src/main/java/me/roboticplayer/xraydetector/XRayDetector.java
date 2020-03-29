@@ -26,9 +26,12 @@ public class XRayDetector extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable() {
+		config = this.getConfig();
+		trackerMap = new HashMap<Material, Map<UUID, Integer>>();
+		saveDefaultConfig();
 		populateMaterials();
 		makeTimers();
-		trackerMap = new HashMap<Material, Map<UUID, Integer>>();
+		getServer().getPluginManager().registerEvents(this, this);
 		getLogger().info("XRayDetector has been enabled");
 	}
 
@@ -70,7 +73,7 @@ public class XRayDetector extends JavaPlugin implements Listener {
 
 	private void populateMaterials() {
 		watched = new ArrayList<Material>();
-		for (String mat : config.getStringList("blocks")) {
+		for (String mat : config.getConfigurationSection("blocks").getValues(false).keySet()) {
 			getLogger().info("TEMP TEST: " + mat.toString());
 			if (Material.getMaterial(mat) != null) {
 				watched.add(Material.getMaterial(mat));
@@ -81,13 +84,14 @@ public class XRayDetector extends JavaPlugin implements Listener {
 	}
 
 	private void makeTimers() {
+		taskIDs = new ArrayList<Integer>();
 		for (Material mat : watched) {
 			int time = config.getInt("blocks." + mat.toString() + ".time");
 			taskIDs.add(getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 				public void run() {
 					trackerMap.get(mat).clear();
 				}
-			}, time, time));
+			}, time * 20, time * 20));
 		}
 	}
 
@@ -96,7 +100,7 @@ public class XRayDetector extends JavaPlugin implements Listener {
 		message = message.replace("%PLAYER%", p.getName());
 		message = message.replace("%NUMBER%", String.valueOf(trackerMap.get(mat).get(p.getUniqueId())));
 		message = message.replace("%BLOCK%", mat.toString());
-		message = message.replace("%TIME%", String.valueOf(config.getInt("cooldownTime")));
+		message = message.replace("%TIME%", String.valueOf(config.getInt("blocks." + mat.toString() + ".time")));
 		message = message.replace("%LOCATION%", formatLocation(loc));
 		return message;
 	}
