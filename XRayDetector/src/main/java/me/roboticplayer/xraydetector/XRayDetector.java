@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -14,8 +15,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class XRayDetector extends JavaPlugin implements Listener {
 
@@ -53,15 +52,16 @@ public class XRayDetector extends JavaPlugin implements Listener {
 		Material mat = e.getBlock().getType();
 		int max = config.getInt("blocks." + mat.toString() + ".amount");
 		int remind = config.getInt("blocks." + mat.toString() + ".reminder");
-		
+
 		if (watched.contains(mat)) {
 			if (trackerMap.get(mat).containsKey(p.getUniqueId()))
 				trackerMap.get(mat).put(p.getUniqueId(), trackerMap.get(mat).get(p.getUniqueId()) + 1);
 			else
 				trackerMap.get(mat).put(p.getUniqueId(), 1);
-			
+
 			if (trackerMap.get(mat).get(p.getUniqueId()) >= max) {
-				if (trackerMap.get(mat).get(p.getUniqueId()) == max || (trackerMap.get(mat).get(p.getUniqueId()) % remind == 0)) {
+				if (trackerMap.get(mat).get(p.getUniqueId()) == max
+						|| (trackerMap.get(mat).get(p.getUniqueId()) % remind == 0)) {
 					for (Player staff : getServer().getOnlinePlayers())
 						if (staff.hasPermission("xraydetector.bypass"))
 							staff.sendMessage(notifyMessage(p, mat, e.getBlock().getLocation()));
@@ -74,7 +74,6 @@ public class XRayDetector extends JavaPlugin implements Listener {
 	private void populateMaterials() {
 		watched = new ArrayList<Material>();
 		for (String mat : config.getConfigurationSection("blocks").getValues(false).keySet()) {
-			getLogger().info("TEMP TEST: " + mat.toString());
 			if (Material.getMaterial(mat) != null) {
 				watched.add(Material.getMaterial(mat));
 				trackerMap.put(Material.getMaterial(mat), new HashMap<UUID, Integer>());
