@@ -1,4 +1,4 @@
-package me.roboticplayer.xraydetector;
+package io.github.ryanehenderson.xraydetector;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -30,3 +30,7 @@ blocks:
     amount: 5
     reminder: 2
     time: 60
+  ANCIENT_DEBRIS:
+    amount: 5
+    reminder: 1
+    time: 300
