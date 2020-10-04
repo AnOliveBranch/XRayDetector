@@ -3,7 +3,7 @@
 # reminder: Another message will be sent every time this many blocks are broken past amount
 # time: Time in seconds before the counter resets
 
-# notifyMessage: Message sent to players with blockmonitor.notify and the console when too many monitored blocks are placed.
+# notifyMessage: Message sent to players with xraydetector.notify and the console when too many monitored blocks are placed.
 # Replacers:
 # %PLAYER%: The player's name
 # %NUMBER%: The number of blocks placed
@@ -18,7 +18,7 @@
 # %ZCoord%: The Z coordinate
 
 
-notifyMessage: "&7[&cXRayDetector&7] &4%PLAYER% has broken %NUMBER% %BLOCK% in the past %TIME% seconds. Most recent at %LOCATION%"
+notifyMessage: "&4%PLAYER% has broken %NUMBER% %BLOCK% in the past %TIME% seconds. Most recent at %LOCATION%"
 locationFormat: "World: %WORLD%, X: %XCoord%, Y: %YCoord%, Z: %ZCoord%"
 
 blocks:
@@ -26,10 +26,6 @@ blocks:
     amount: 10
     reminder: 5
     time: 120
-  EMERALD_ORE:
-    amount: 5
-    reminder: 2
-    time: 60
   ANCIENT_DEBRIS:
     amount: 5
     reminder: 1
