@@ -63,7 +63,7 @@ public class XRayDetector extends JavaPlugin implements Listener {
 				if (trackerMap.get(mat).get(p.getUniqueId()) == max
 						|| (trackerMap.get(mat).get(p.getUniqueId()) % remind == 0)) {
 					for (Player staff : getServer().getOnlinePlayers())
-						if (staff.hasPermission("xraydetector.bypass"))
+						if (staff.hasPermission("xraydetector.notify"))
 							staff.sendMessage(notifyMessage(p, mat, e.getBlock().getLocation()));
 					getLogger().info(notifyMessage(p, mat, e.getBlock().getLocation()));
 				}
